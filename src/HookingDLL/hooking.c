@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <windows.h>
 #include <stdarg.h>
-#include <ntdef.h>
 #include "detours.h"
 
 #pragma comment(lib, "user32.lib")
@@ -21,34 +20,15 @@ void debugPrintf(const char *fmt, ...) {
 }
 
 /*
-MessageBox
-
-*/
-int (WINAPI * pMessageBox)(
-    HWND hWnd, 
-    LPCTSTR lpText, 
-    LPCTSTR lpCaption, 
-    UINT uType
-) = MessageBox;
-
-int HookedMessageBox(
-    HWND hWnd, 
-    LPCTSTR lpText, 
-    LPCTSTR lpCaption, 
-    UINT uType
-) {
-    int returnValue;
-    debugPrintf("[!] MessageBox(0x%p, %s, %s, %d)\n", hWnd, lpText, lpCaption, uType);
-    returnValue = pMessageBox(hWnd, lpText, lpCaption, uType);
-    return returnValue;
-}
-
-/*
 NtCreateUserProcess
 source: https://ntdoc.m417z.com/ntcreateuserprocess
 
 */ 
 typedef void* PVOID_GENERIC;
+typedef struct _OBJECT_ATTRIBUTES OBJECT_ATTRIBUTES;
+typedef OBJECT_ATTRIBUTES* POBJECT_ATTRIBUTES;
+typedef const OBJECT_ATTRIBUTES* PCOBJECT_ATTRIBUTES;
+
 
 long (WINAPI * pNtCreateUserProcess)(
     PHANDLE ProcessHandle,
@@ -84,13 +64,11 @@ long HookedNtCreateUserProcess(
 }
 
 int AttachHooks(){
-    DetourAttach((PVOID*)&pMessageBox, HookedMessageBox);
     DetourAttach((PVOID*)&pNtCreateUserProcess, HookedNtCreateUserProcess);
     return 0;
 }
 
 int DetachHooks(){
-    DetourDetach((PVOID*)&pMessageBox, HookedMessageBox);
     DetourDetach((PVOID*)&pNtCreateUserProcess, HookedNtCreateUserProcess);
     return 0;
 }

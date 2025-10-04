@@ -32,8 +32,7 @@ The goal is to improve the architecture, add more telemetry sources and a more e
 Uses MS Detours to hook some Windows API calls:
 - ntdll.dll
     - NtCreateUserProcess
-- User32.dll
-    - MessageBox
+
 
 The current hooked function's detour consists in a simple function that prints the called API on console and debugger (via `OutputDebugStringA`)
 
