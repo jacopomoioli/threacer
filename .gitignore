@@ -8,6 +8,7 @@
 
 # Build directories
 x64/
+*/x64/
 x86/
 Debug/
 Release/
