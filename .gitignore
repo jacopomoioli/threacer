@@ -1,0 +1,54 @@
+# Visual Studio
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build directories
+x64/
+x86/
+Debug/
+Release/
+build/
+out/
+
+# Object and binary files
+*.obj
+*.pdb
+*.lib
+*.exp
+*.dll
+*.exe
+*.sys
+
+# Driver signing/intermediate files
+*.cat
+*.inf~
+*.log
+*.o
+*.map
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Misc
+*.bak
+*.tmp
+*.log
+*.idb
+*.aps
+*.ncb
+*.sbr
+*.opensdf
+*.tlog
+*.ipch
+*.pch
+*.rsp
+*.ilk
+*.iobj
+*.ipdb
